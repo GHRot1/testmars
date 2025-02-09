@@ -77,7 +77,9 @@ class MarsOrbitApp:
         return figure
 
     def run(self):
-        self.app.run_server(debug=True)
+         # Получаем порт из переменной окружения PORT
+        port = int(os.environ.get("PORT", 8050))  # 8050 - порт по умолчанию
+        self.app.run_server(debug=True, host='0.0.0.0', port=port)  # Указываем слушать на всех интерфейсах
 
 # Не запускаем напрямую приложение здесь
 mars_app = MarsOrbitApp()  # Создаем объект приложения
