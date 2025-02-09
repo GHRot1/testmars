@@ -79,6 +79,6 @@ class MarsOrbitApp:
     def run(self):
         self.app.run_server(debug=True)
 
-if __name__ == '__main__':
-    mars_app = MarsOrbitApp()  # Создание экземпляра приложения
-    mars_app.run()  # Запуск приложения
+# Не запускаем напрямую приложение здесь
+mars_app = MarsOrbitApp()  # Создаем объект приложения
+
