@@ -1,0 +1,55 @@
+name: Python CI with TensorFlow-CPU and Dash
+
+on:
+  push:
+    branches:
+      - main  # или любая ветка, с которой хотите работать
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Выбор ОС для работы с пайплайном
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Проверка кода из репозитория
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12.1'  # Указываем Python 3.12.1
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install tensorflow-cpu==2.11  # Установка TensorFlow для CPU
+        pip install dash  # Установка Dash для вашего приложения
+        pip install plotly  # Установка Plotly для визуализации
+        pip install -r requirements.txt  # Установка остальных зависимостей, если есть
+
+    - name: Run tests
+      run: |
+        pytest tests  # Запуск тестов, если у вас есть папка с тестами
+
+    - name: Cache pip dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip  # Кеширование зависимостей для ускорения сборки
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # Деплой будет происходить только после успешной сборки
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to server
+      run: |
+        # Пример деплоя, измените в соответствии с вашими нуждами
+        echo "Deploying to server..."
