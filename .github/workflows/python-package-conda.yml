@@ -1,33 +1,53 @@
-name: Python Package using Conda
+name: Python CI with TensorFlow-CPU and Dash
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build-linux:
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 5
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.10'
-    - name: Add conda to system path
+        python-version: '3.12.1'  # Используем Python 3.12.1
+
+    - name: Upgrade pip, setuptools, and wheel
       run: |
-        # $CONDA is an environment variable pointing to the root of the miniconda directory
-        echo $CONDA/bin >> $GITHUB_PATH
+        python -m pip install --upgrade pip setuptools wheel
     - name: Install dependencies
       run: |
-        conda env update --file environment.yml --name base
-    - name: Lint with flake8
-      run: |
-        pip install tensorflow-cpu numpy pytest # Устанавливаем последнюю версию TensorFlow для CPU
+        pip install tensorflow-cpu numpy  # Устанавливаем последнюю версию TensorFlow для CPU
         pip install dash
         pip install plotly
-     
-    - name: Test with pytest
+        
+    - name: Run tests
       run: |
-        conda install pytest
-        pytest
+        pytest tests  # Запуск тестов, если есть
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to server
+      run: |
+        echo "Deploying to server..."
