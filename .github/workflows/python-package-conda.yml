@@ -26,13 +26,18 @@ jobs:
         python -m pip install --upgrade pip setuptools wheel
     - name: Install dependencies
       run: |
-        pip install tensorflow-cpu numpy  # Устанавливаем последнюю версию TensorFlow для CPU
+        pip install tensorflow-cpu numpy pytest # Устанавливаем последнюю версию TensorFlow для CPU
         pip install dash
         pip install plotly
         
     - name: Run tests
       run: |
-        pytest tests  # Запуск тестов, если есть
+        if [ -d "tests" ]; then
+          pytest tests  # Запуск тестов, если они есть
+        else
+          echo "No tests found, skipping test run"
+        fi
+        
     - name: Cache pip dependencies
       uses: actions/cache@v3
       with:
