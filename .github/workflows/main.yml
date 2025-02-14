@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install tensorflow-cpu==2.11  # Установка TensorFlow для CPU
+        pip install tensorflow-cpu  # Установка TensorFlow для CPU
         pip install dash  # Установка Dash для вашего приложения
         pip install plotly  # Установка Plotly для визуализации
         pip install -r requirements.txt  # Установка остальных зависимостей, если есть
