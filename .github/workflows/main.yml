@@ -27,10 +27,10 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install tensorflow-cpu  # Устанавливаем последнюю версию TensorFlow для CPU
+        pip install tensorflow-cpu numpy  # Устанавливаем последнюю версию TensorFlow для CPU
         pip install dash
         pip install plotly
-        pip install -r requirements.txt  # Устанавливаем другие зависимости
+        
 
     - name: Run tests
       run: |
