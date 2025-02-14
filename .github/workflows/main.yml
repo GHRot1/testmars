@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install tensorflow-cpu  # Установка TensorFlow для CPU
+        pip install tensorflow-cpu==2.11  # Установка TensorFlow для CPU
         pip install dash  # Установка Dash для вашего приложения
         pip install plotly  # Установка Plotly для визуализации
         pip install -r requirements.txt  # Установка остальных зависимостей, если есть
@@ -34,7 +34,7 @@ jobs:
         pytest tests  # Запуск тестов, если у вас есть папка с тестами
 
     - name: Cache pip dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v3  # Обновленная версия actions/cache
       with:
         path: ~/.cache/pip  # Кеширование зависимостей для ускорения сборки
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -53,3 +53,4 @@ jobs:
       run: |
         # Пример деплоя, измените в соответствии с вашими нуждами
         echo "Deploying to server..."
+
