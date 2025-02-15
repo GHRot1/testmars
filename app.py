@@ -73,3 +73,4 @@ if __name__ == '__main__':
     # Получаем порт из переменной окружения PORT для деплоя
     port = int(os.environ.get("PORT", 8050))  # 8050 - порт по умолчанию
     app.run_server(debug=True, host='0.0.0.0', port=port)  # Указываем слушать на всех интерфейсах
+    gunicorn app:mars_app.server
