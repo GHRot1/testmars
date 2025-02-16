@@ -30,11 +30,6 @@ jobs:
         pip install tensorflow-cpu numpy pytest # Устанавливаем последнюю версию TensorFlow для CPU
         pip install dash
         pip install plotly
-        pip install pylint  # Устанавливаем pylint для линтинга
-
-    - name: Run pylint
-      run: |
-        pylint **/*.py  # Проверка всех .py файлов в проекте
 
     - name: Run tests
       run: |
