@@ -1,4 +1,6 @@
-dash
-numpy
-tensorflow-cpu
-plotly
+numpy>=1.19.5
+tensorflow>=2.5.0
+dash>=2.0.0
+plotly>=5.0.0
+gunicorn>=20.1.0
+Flask>=2.0.1
